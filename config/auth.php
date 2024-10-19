@@ -35,10 +35,12 @@ return [
     |
     */
 
+    // TODO: Configuração do sanctum
     'guards' => [
-        'web' => [
-            'driver'   => 'session',
+        'api' => [
+            'driver'   => 'sanctum',
             'provider' => 'users',
+            'hash'     => false,
         ],
     ],
 

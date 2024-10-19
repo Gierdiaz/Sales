@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\{DB, Log};
 class ContactController extends Controller
 {
     protected $contactRepository;
+
     protected $viaCepService;
 
     public function __construct(ContactRepositoryInterface $contactRepository, ViaCepService $viaCepService)
@@ -24,6 +25,7 @@ class ContactController extends Controller
     public function index()
     {
         $contacts = $this->contactRepository->getAllContacts();
+
         return ContactResource::collection($contacts);
     }
 
@@ -44,6 +46,7 @@ class ContactController extends Controller
                 'message' => 'Nenhum contato encontrado para o termo fornecido.',
             ], Response::HTTP_NOT_FOUND);
         }
+
         return ContactResource::collection($contacts);
     }
 
@@ -52,7 +55,7 @@ class ContactController extends Controller
         try {
             $contact = $this->contactRepository->getContactById($id);
 
-            return new ContactResource($contact);
+            return ContactResource::make($contact);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Contato não encontrado.',
@@ -88,13 +91,13 @@ class ContactController extends Controller
 
             DB::commit();
 
-            return (new ContactResource($contact))
+            return (ContactResource::make($contact))
                 ->response()
-                ->setStatusCode(201);
+                ->setStatusCode(Response::HTTP_CREATED);
 
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('Erro ao criar contato: ' . $e->getMessage(), [
+            Log::channel('contact')->error('Erro ao criar contato: ' . $e->getMessage(), [
                 'code'       => $e->getCode(),
                 'line'       => $e->getLine(),
                 'file'       => $e->getFile(),

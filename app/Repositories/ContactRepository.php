@@ -22,7 +22,7 @@ class ContactRepository implements ContactRepositoryInterface
                 $query->orWhere($key, 'LIKE', "%{$value}%");
             }
         }
-    
+
         return $query->paginate(10);
     }
 

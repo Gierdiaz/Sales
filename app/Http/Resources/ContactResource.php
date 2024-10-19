@@ -16,13 +16,14 @@ class ContactResource extends JsonResource
     public function toArray(Request $request): array
     {
         $isIndex = Route::currentRouteName() === 'contacts.index';
-        $isShow = Route::currentRouteName() === 'contacts.show';
+        $isShow  = Route::currentRouteName() === 'contacts.show';
 
         $resourceArray = [
             'id'      => $this->id,
             'name'    => $this->name,
             'phone'   => $this->phone,
             'email'   => $this->email,
+            'number'  => $this->number,
             'cep'     => $this->cep,
             'address' => $this->address,
         ];
