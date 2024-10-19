@@ -2,6 +2,15 @@
 
 Esta é uma aplicação web desenvolvida em PHP utilizando o framework Laravel para gerenciar contatos. A aplicação permite a adição, busca, atualização e remoção de contatos, além de integrar com a API ViaCEP para validar endereços.
 
+## Princípios de Design Utilizados
+
+- **SOLID**: A aplicação segue os princípios SOLID para garantir que o código seja escalável, manutenível e de fácil compreensão.
+- **Clean Architecture**: A arquitetura da aplicação é baseada no conceito de Clean Architecture, separando as preocupações e facilitando testes e manutenção.
+- **Repository Pattern**: Utiliza-se o padrão Repository para abstrair a lógica de acesso a dados, permitindo uma maior flexibilidade e testabilidade.
+- **Data Transfer Object (DTO)**: Os objetos de transferência de dados (DTO) são utilizados para encapsular os dados que serão transferidos entre as camadas da aplicação.
+- **Integração com API**: A aplicação integra-se com a API Via CEP para validar e obter informações de endereço a partir do CEP fornecido pelo usuário.
+- **Arquitetura RESTful com HATEOAS**: Os endpoints da API estão projetados de acordo com os princípios RESTful e implementam HATEOAS para fornecer links para navegação relacionada.
+
 ## Requisitos
 
 Antes de começar, verifique se você possui as seguintes ferramentas instaladas em sua máquina:
