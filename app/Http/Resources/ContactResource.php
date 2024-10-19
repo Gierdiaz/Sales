@@ -4,8 +4,12 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Models\Contact;
 use Illuminate\Support\Facades\Route;
 
+/**
+ * @property Contact $resource
+ */
 class ContactResource extends JsonResource
 {
     /**
@@ -19,13 +23,13 @@ class ContactResource extends JsonResource
         $isShow  = Route::currentRouteName() === 'contacts.show';
 
         $resourceArray = [
-            'id'      => $this->id,
-            'name'    => $this->name,
-            'phone'   => $this->phone,
-            'email'   => $this->email,
-            'number'  => $this->number,
-            'cep'     => $this->cep,
-            'address' => $this->address,
+            'id'      => $this->resource->id,
+            'name'    => $this->resource->name,
+            'phone'   => $this->resource->phone,
+            'email'   => $this->resource->email,
+            'number'  => $this->resource->number,
+            'cep'     => $this->resource->cep,
+            'address' => $this->resource->address,
         ];
 
         if ($isShow) {
@@ -34,7 +38,7 @@ class ContactResource extends JsonResource
             ];
         } elseif ($isIndex) {
             $resourceArray['links'] = [
-                'show' => route('contacts.show', $this->id),
+                'show' => route('contacts.show', $this->resource->id),
             ];
         }
 

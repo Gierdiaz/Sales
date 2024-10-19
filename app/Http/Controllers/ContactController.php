@@ -114,7 +114,10 @@ class ContactController extends Controller
             if ($request->has('cep')) {
                 $cep         = $request->input('cep');
                 $addressData = $this->viaCepService->getAddressByCep($cep);
-                $address     = $addressData['logradouro'] . ', ' . $addressData['bairro'] . ', ' . $addressData['localidade'] . ' - ' . $addressData['uf'];
+                $address = $addressData['logradouro'] . ', ' . 
+                $addressData['bairro'] . ', ' . 
+                $addressData['localidade'] . ' - ' . 
+                $addressData['uf'];
                 $request->merge(['address' => $address]);
             }
 
