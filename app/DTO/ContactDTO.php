@@ -11,5 +11,6 @@ class ContactDTO
         public string $number,
         public string $cep,
         public string $address
-    ){}
+    ) {
+    }
 }

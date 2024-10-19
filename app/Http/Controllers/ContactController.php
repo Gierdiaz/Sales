@@ -50,6 +50,7 @@ class ContactController extends Controller
         return ContactResource::collection($contacts);
     }
 
+
     public function show($id)
     {
         try {

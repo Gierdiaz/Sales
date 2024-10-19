@@ -23,6 +23,7 @@ Route::prefix('v1')
 Route::prefix('/v1')
     ->middleware('auth:sanctum')
     ->group(function () {
+        Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
         /**
         * Contacts
