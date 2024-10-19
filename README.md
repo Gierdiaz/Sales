@@ -13,7 +13,7 @@ Antes de começar, verifique se você possui as seguintes ferramentas instaladas
 
 ### 1. Clone o Repositório
 
-git clone https://github.com/Gierdiaz/Laravel.git
+git clone https://github.com/Gierdiaz/Agenda.git
 
 ###  2. Crie um arquivo .env
 Copie o arquivo .env.example e renomeie-o para .env. Configure as variáveis de ambiente conforme necessário.
