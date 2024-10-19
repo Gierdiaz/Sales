@@ -80,14 +80,7 @@ class ContactController extends Controller
                 $addressData['logradouro'] . ', ' . $addressData['bairro'] . ', ' . $addressData['localidade'] . ' - ' . $addressData['uf']
             );
 
-            $contact = $this->contactRepository->createContact([
-                'name'    => $contactDTO->name,
-                'phone'   => $contactDTO->phone,
-                'email'   => $contactDTO->email,
-                'number'  => $contactDTO->number,
-                'cep'     => $contactDTO->cep,
-                'address' => $contactDTO->address,
-            ]);
+            $contact = $this->contactRepository->createContact($contactDTO);
 
             DB::commit();
 

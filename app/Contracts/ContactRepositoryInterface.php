@@ -2,6 +2,7 @@
 
 namespace App\Contracts;
 
+use App\DTO\ContactDTO;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface ContactRepositoryInterface
@@ -12,7 +13,7 @@ interface ContactRepositoryInterface
 
     public function getContactById($id);
 
-    public function createContact(array $data);
+    public function createContact(ContactDTO $contactDTO);
 
     public function updateContact($id, array $data);
 

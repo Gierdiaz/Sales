@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Contracts\ContactRepositoryInterface;
+use App\DTO\ContactDTO;
 use App\Models\Contact;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
@@ -31,9 +32,16 @@ class ContactRepository implements ContactRepositoryInterface
         return Contact::findOrFail($id);
     }
 
-    public function createContact(array $data)
+    public function createContact(ContactDTO $contactDTO)
     {
-        return Contact::create($data);
+        return Contact::create([
+            'name'    => $contactDTO->name,
+            'phone'   => $contactDTO->phone,
+            'email'   => $contactDTO->email,
+            'number'  => $contactDTO->number,
+            'cep'     => $contactDTO->cep,
+            'address' => $contactDTO->address,
+        ]);
     }
 
     public function updateContact($id, array $data)
