@@ -10,14 +10,14 @@ Route::get('/', function () {
     ]);
 });
 
-Route::prefix('v1')
+Route::prefix('äauth')
     ->middleware('guest')
     ->group(function () {
         /**
          * Auth / Reset Password
          */
-        Route::post('login', [AuthController::class, 'login'])->name('auth.login');
-        Route::post('register', [AuthController::class, 'register'])->name('auth.register');
+        Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+        Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
     });
 
 Route::prefix('/v1')
