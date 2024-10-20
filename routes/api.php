@@ -10,7 +10,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::prefix('äauth')
+Route::prefix('auth')
     ->middleware('guest')
     ->group(function () {
         /**
