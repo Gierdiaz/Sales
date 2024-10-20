@@ -52,11 +52,6 @@ Para instalar as dependências do Composer, execute:
 ```bash
 docker exec app composer install
 ```
-###  5. Execute as Migrações do Banco de Dados
-Para criar as tabelas no banco de dados, execute:
-```bash
-docker exec app php artisan migrate:fresh --seed
-```
 
 # Acessar o MySQL no container
 Depois que o container do MySQL estiver em execução, você pode acessá-lo diretamente usando o seguinte comando:
@@ -90,6 +85,12 @@ USE nome_do_banco;
 ### Visualizar tabelas em um banco de dados:
 ```sql
 SHOW TABLES;
+```
+
+###  5. Execute as Migrações do Banco de Dados
+Para criar as tabelas no banco de dados, execute:
+```bash
+docker exec app php artisan migrate:fresh --seed
 ```
 
 # Comandos de Teste
