@@ -21,10 +21,16 @@ Antes de começar, verifique se você possui as seguintes ferramentas instaladas
 ## Configuração do Ambiente
 
 ### 1. Clone o Repositório
-
+```bash
 git clone https://github.com/Gierdiaz/Agenda.git
+```
 
-###  2. Crie um arquivo .env
+### 2. Navegue até o Diretório do Projeto
+```bash
+cd Agenda
+```
+
+###  3. Crie um arquivo .env
 Copie o arquivo .env.example e renomeie-o para .env. Configure as variáveis de ambiente conforme necessário.
 
 - **Linux/macOS**:
@@ -47,16 +53,27 @@ DB_USERNAME=root
 DB_PASSWORD=root
 ```
 
-###  3. Inicie os Containers Docker
-Execute o seguinte comando para iniciar os containers Docker:
+###  4. Construir e Iniciar os Contêineres
+Para construir a imagem Docker e iniciar todos os serviços, execute:
 ```bash
-docker-compose up -d
+docker-compose up --build -d
 ```
-###  4. Instale as Dependências do Composer
+###  5. Instale as Dependências do Composer
 Para instalar as dependências do Composer, execute:
-
 ```bash
 docker exec app composer install
+```
+
+### 6. Acesse a Aplicação
+Após a construção e inicialização dos contêineres, você poderá acessar a aplicação em:
+```bash
+http://localhost:8000
+```
+
+### 7.  Parar os Contêineres
+Para parar os contêineres, você pode usar:
+```bash
+docker-compose down
 ```
 
 # Acessar o MySQL no container
@@ -93,7 +110,7 @@ USE nome_do_banco;
 SHOW TABLES;
 ```
 
-###  5. Execute as Migrações do Banco de Dados
+###  8. Execute as Migrações do Banco de Dados
 Para criar as tabelas no banco de dados, execute:
 ```bash
 docker exec app php artisan migrate:fresh --seed
@@ -104,17 +121,17 @@ Executando os Comandos do Projeto
 Para executar os testes e ferramentas de análise de código, utilize os seguintes comandos:
 
 ### Para executar os testes com Pest:
-
+Executa os testes automatizados da aplicação usando o Pest
 ```bash
 docker exec app ./vendor/bin/pest
 ```
 ### Para executar o PHP Code Sniffer (Pint):
-
+Formata e verifica o código PHP da sua aplicação, garantindo que ele siga os padrões de codificação.
 ```bash
 docker exec app ./vendor/bin/pint
 ```
 ### Para analisar o código com PHPStan:
-
+Ferramenta de análise estática que ajuda a detectar erros no código antes mesmo da execução.
 ```bash
 docker exec app ./vendor/bin/phpstan analyse --memory-limit=2G
 ```

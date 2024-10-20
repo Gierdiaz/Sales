@@ -37,6 +37,8 @@ RUN composer install --no-scripts --no-autoloader
 
 COPY . .
 
+COPY .env.example .env
+
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html \
     && chmod -R 775 /var/www/html/storage \
