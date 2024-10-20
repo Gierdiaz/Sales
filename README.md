@@ -9,7 +9,7 @@ Esta é uma aplicação web desenvolvida em PHP utilizando o framework Laravel p
 - **Repository Pattern**: Utiliza-se o padrão Repository para abstrair a lógica de acesso a dados, permitindo uma maior flexibilidade e testabilidade.
 - **Data Transfer Object (DTO)**: Os objetos de transferência de dados (DTO) são utilizados para encapsular os dados que serão transferidos entre as camadas da aplicação.
 - **Integração com API**: A aplicação integra-se com a API Via CEP para validar e obter informações de endereço a partir do CEP fornecido pelo usuário.
-- **Arquitetura RESTful com HATEOAS**: Os endpoints da API estão projetados de acordo com os princípios RESTful e implementam HATEOAS para fornecer links para navegação relacionada.
+- **API RESTful com Maturidade de Richardson e HATEOAS**: Os endpoints da API são projetados seguindo os princípios RESTful e incorporam a maturidade de Richardson para oferecer diferentes níveis de abstração. Além disso, implementamos HATEOAS para fornecer links que permitem a navegação entre recursos relacionados, melhorando a interatividade e a descoberta da API.
 
 ## Requisitos
 
@@ -27,10 +27,17 @@ git clone https://github.com/Gierdiaz/Agenda.git
 ###  2. Crie um arquivo .env
 Copie o arquivo .env.example e renomeie-o para .env. Configure as variáveis de ambiente conforme necessário.
 
+- **Linux/macOS**:
 ```bash
 cp .env.example .env
 ```
-Configure as seguintes variáveis de ambiente para o banco de dados MySQL:
+
+- **Windows (CMD)**:
+```bash
+copy .env.example .env
+```
+
+Exemplo para configurar as seguintes variáveis de ambiente para o banco de dados MySQL:
 ```plaintext
 DB_CONNECTION=mysql
 DB_HOST=mysql
@@ -39,7 +46,6 @@ DB_DATABASE=application
 DB_USERNAME=root
 DB_PASSWORD=root
 ```
-
 
 ###  3. Inicie os Containers Docker
 Execute o seguinte comando para iniciar os containers Docker:

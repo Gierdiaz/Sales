@@ -23,10 +23,10 @@ class ContactRequest extends FormRequest
     {
         return [
             'name'   => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
-            'phone'  => 'required|string|regex:/^\+?[0-9\s\-]+$/|max:15', // Telefone com dígitos e possíveis traços ou espaços
+            'phone'  => 'required|string|regex:/^\+?[0-9\s\-]+$/|max:15', 
             'email'  => 'required|email|max:255|unique:contacts,email',
-            'number' => 'nullable|string|max:10|regex:/^[a-zA-Z0-9\-\/]+$/', // Número de residência ou apartamento
-            'cep'    => 'required|string|regex:/^\d{5}-\d{3}$/', // CEP no formato 00000-000
+            'number' => 'nullable|string|max:10|regex:/^[a-zA-Z0-9\-\/]+$/',
+            'cep'    => 'required|string|regex:/^\d{5}-\d{3}$/',
         ];
     }
 
