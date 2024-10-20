@@ -7,8 +7,8 @@ use App\DTO\ContactDTO;
 use App\Http\Requests\ContactRequest;
 use App\Http\Resources\ContactResource;
 use App\Services\ViaCepService;
-use Illuminate\Http\{JsonResponse, Request, Response};
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\{JsonResponse, Request, Response};
 use Illuminate\Support\Facades\{DB, Log};
 
 class ContactController extends Controller
@@ -26,10 +26,11 @@ class ContactController extends Controller
     public function index(): AnonymousResourceCollection
     {
         $contacts = $this->contactRepository->getAllContacts();
+
         return ContactResource::collection($contacts);
     }
 
-    public function search(Request $request): JsonResponse
+    public function search(Request $request)
     {
         $searchTerm = $request->only(['name', 'email', 'cep', 'number']);
 
@@ -50,7 +51,7 @@ class ContactController extends Controller
         return ContactResource::collection($contacts);
     }
 
-    public function show($id): JsonResponse
+    public function show($id)
     {
         try {
             $contact = $this->contactRepository->getContactById($id);
@@ -63,7 +64,7 @@ class ContactController extends Controller
         }
     }
 
-    public function store(ContactRequest $request): JsonResponse
+    public function store(ContactRequest $request)
     {
         DB::beginTransaction();
 

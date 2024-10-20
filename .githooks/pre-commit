@@ -1,27 +1,27 @@
-#!/usr/bin/env pwsh
+#!/bin/bash
 
 # Executa o PHP Code Sniffer (Pint)
-Write-Host "Executando PHP Code Sniffer (Pint)..."
+echo "Executando PHP Code Sniffer (Pint)..."
 docker exec app ./vendor/bin/pint
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "Falhas de estilo detectadas. Commit abortado."
+if [ $? -ne 0 ]; then
+    echo "Falhas de estilo detectadas. Commit abortado."
     exit 1
-}
+fi
 
 # Executa os testes com Pest
-Write-Host "Executando testes com Pest..."
+echo "Executando testes com Pest..."
 docker exec app ./vendor/bin/pest
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "Os testes falharam. Commit abortado."
+if [ $? -ne 0 ]; then
+    echo "Os testes falharam. Commit abortado."
     exit 1
-}
+fi
 
 # Análise de código com PHPStan
-Write-Host "Analisando o código com PHPStan..."
+echo "Analisando o código com PHPStan..."
 docker exec app ./vendor/bin/phpstan analyse --memory-limit=2G
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "Erros de análise encontrados. Commit abortado."
+if [ $? -ne 0 ]; then
+    echo "Erros de análise encontrados. Commit abortado."
     exit 1
-}
+fi
 
-Write-Host "Todos os testes e análises foram bem-sucedidos. Prosseguindo com o commit."
+echo "Todos os testes e análises foram bem-sucedidos. Prosseguindo com o commit."

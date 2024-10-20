@@ -2,8 +2,7 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\{Http, Log};
 
 class ViaCepService
 {
@@ -13,7 +12,7 @@ class ViaCepService
 
         if ($response->failed() || isset($response->json()['erro'])) {
             Log::channel('cep')->error('Erro ao buscar endereço pelo CEP', [
-                'cep' => $cep,
+                'cep'      => $cep,
                 'response' => $response->json(),
             ]);
 
