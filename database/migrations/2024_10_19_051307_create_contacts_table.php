@@ -12,12 +12,12 @@ return new class () extends Migration {
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->uuid('id')->primary()->unique();
-            $table->string('name');
-            $table->string('phone');
-            $table->string('email')->unique();
-            $table->string('number')->nullable();
-            $table->string('cep')->index();
-            $table->string('address')->nullable();
+            $table->string('name')->comment('Nome do contato');
+            $table->string('phone')->comment('Telefone de contato');
+            $table->string('email')->unique()->comment('Email de contato, deve ser único');
+            $table->string('number')->nullable()->comment('Número da residência ou apartamento');
+            $table->string('cep')->comment('Código postal');
+            $table->string('address')->nullable()->comment('Endereço completo do contato');
             $table->timestamps();
             $table->softDeletes();
         });
