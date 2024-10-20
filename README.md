@@ -310,3 +310,8 @@ docker exec app ./vendor/bin/phpstan analyse --memory-limit=2G
   }
 ```
 
+## Executando os testes no Commit antes de fazer o push
+
+Quando você faz um commit, o hook pre-commit executa automaticamente os testes e análises de código para ter certeza que todas as alterações irão subir sem nenhum erro. Veja um exemplo do que acontece:
+
+![Resultado do Pre-Commit](image.png)
