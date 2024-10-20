@@ -58,19 +58,26 @@ Para construir a imagem Docker e iniciar todos os serviços, execute:
 ```bash
 docker-compose up --build -d
 ```
+
 ###  5. Instale as Dependências do Composer
 Para instalar as dependências do Composer, execute:
 ```bash
 docker exec app composer install
 ```
 
-### 6. Acesse a Aplicação
+###  6. Gerar uma Nova Chave de Criptografia
+Use o Artisan para gerar uma nova chave de criptografia
+```bash
+docker-compose exec app php artisan key:generate
+```
+
+### 7. Acesse a Aplicação
 Após a construção e inicialização dos contêineres, você poderá acessar a aplicação em:
 ```bash
 http://localhost:8000
 ```
 
-### 7.  Parar os Contêineres
+### 8.  Parar os Contêineres
 Para parar os contêineres, você pode usar:
 ```bash
 docker-compose down
@@ -110,7 +117,7 @@ USE nome_do_banco;
 SHOW TABLES;
 ```
 
-###  8. Execute as Migrações do Banco de Dados
+###  9. Execute as Migrações do Banco de Dados
 Para criar as tabelas no banco de dados, execute:
 ```bash
 docker exec app php artisan migrate:fresh --seed
@@ -145,18 +152,19 @@ docker exec app ./vendor/bin/phpstan analyse --memory-limit=2G
 - **Endpoint:** `/api/auth/register`  
 - **Corpo da Requisição:**
 ```json
-    {
-      "name": "Nome do Usuário",
-      "email": "email@example.com",
-      "password": "senha123",
-      "password_confirmation": "senha123"
-    } 
+  {
+    "name": "Nome do Usuário",
+    "email": "usuario@example.com",
+    "password": "SenhaSegura123!",
+    "password_confirmation": "SenhaSegura123!"
+  }
+
 ```
 - **Resposta:**
 ```json
-    {
-      "message": "User registered successfully"
-    }
+  {
+    "message": "User registered successfully"
+  }
 ```
 ### Login
 
@@ -164,10 +172,11 @@ docker exec app ./vendor/bin/phpstan analyse --memory-limit=2G
 - **Endpoint:** `/api/auth/login`  
 - **Corpo da Requisição:**
 ```json
-    {
-      "email": "email@example.com",
-      "password": "senha123"
-    }
+{
+  "email": "usuario@example.com",
+  "password": "SenhaSegura123!"
+}
+
 ```
 
 - **Resposta:**
@@ -203,8 +212,8 @@ docker exec app ./vendor/bin/phpstan analyse --memory-limit=2G
         "phone": "123456789",
         "email": "contato@example.com",
         "number": "10",
-        "cep": "01001-000",
-        "address": "Praça da Sé, Sé, São Paulo - SP",
+        "cep": "22070-012",
+        "address": "Praia de Copacabana, Rio de Janeiro - RJ",
         "links": {
           "show": "/api/contacts/550e8400-e29b-41d4-a716-446655440000"
         }
@@ -224,7 +233,7 @@ docker exec app ./vendor/bin/phpstan analyse --memory-limit=2G
         "phone": "123456789",
         "email": "contato@exemplo.com",
         "number": "10",
-        "cep": "01001-000",
+        "cep": "22070-012",
         "address": "Endereço, Bairro, Cidade - UF",
         "links": {
             "index": "/api/contacts"
@@ -245,8 +254,8 @@ docker exec app ./vendor/bin/phpstan analyse --memory-limit=2G
         "phone": "123456789",
         "email": "contato@example.com",
         "number": "10",
-        "cep": "01001-000",
-        "address": "Praça da Sé, Sé, São Paulo - SP"
+        "cep": "22070-012",
+        "address": "Praia de Copacabana, Rio de Janeiro - RJ"
       }
     ]
 ```
@@ -274,7 +283,7 @@ docker exec app ./vendor/bin/phpstan analyse --memory-limit=2G
         "phone": "123456789",
         "email": "contato@exemplo.com",
         "number": "10",
-        "cep": "01001-000",
+        "cep": "22070-012",
         "address": "Endereço, Bairro, Cidade - UF"
     }  
 ```
