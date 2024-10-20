@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Executa o PHP Code Sniffer (Pint)
+echo "Executando PHP Code Sniffer (Pint)..."
+docker exec app ./vendor/bin/pint
+if [ $? -ne 0 ]; then
+    echo "Falhas de estilo detectadas. Commit abortado."
+    exit 1
+fi
+
+# Executa os testes com Pest
+echo "Executando testes com Pest..."
+docker exec app ./vendor/bin/pest
+if [ $? -ne 0 ]; then
+    echo "Os testes falharam. Commit abortado."
+    exit 1
+fi
+
+# Análise de código com PHPStan
+echo "Analisando o código com PHPStan..."
+docker exec app ./vendor/bin/phpstan analyse --memory-limit=2G
+if [ $? -ne 0 ]; then
+    echo "Erros de análise encontrados. Commit abortado."
+    exit 1
+fi
+
+echo "Todos os testes e análises foram bem-sucedidos. Prosseguindo com o commit."
