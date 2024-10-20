@@ -24,7 +24,7 @@ class ContactRequest extends FormRequest
         return [
             'name'   => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
             'phone'  => 'required|string|regex:/^\+?[0-9\s\-]+$/|max:15',
-            'email'  => 'required|email|max:255|unique:contacts,email',
+            'email'  => 'required|email|max:255',
             'number' => 'nullable|string|max:10|regex:/^[a-zA-Z0-9\-\/]+$/',
             'cep'    => 'required|string|regex:/^\d{5}-\d{3}$/',
         ];
@@ -47,7 +47,6 @@ class ContactRequest extends FormRequest
             'email.required' => 'O campo e-mail é obrigatório.',
             'email.email'    => 'Forneça um endereço de e-mail válido.',
             'email.max'      => 'O e-mail não pode ter mais que 255 caracteres.',
-            'email.unique'   => 'Este e-mail já está registrado.',
 
             'number.string' => 'O número deve ser um texto.',
             'number.max'    => 'O número não pode ter mais que 10 caracteres.',

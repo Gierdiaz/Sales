@@ -14,7 +14,7 @@ return new class () extends Migration {
             $table->uuid('id')->primary()->unique();
             $table->string('name');
             $table->string('phone');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('number')->nullable()->comment('Número da residência ou apartamento');
             $table->string('cep')->comment('Código postal');
             $table->string('address')->nullable()->comment('Endereço completo do contato');
