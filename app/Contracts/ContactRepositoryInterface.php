@@ -9,7 +9,7 @@ interface ContactRepositoryInterface
 {
     public function getAllContacts(): LengthAwarePaginator;
 
-    public function searchContacts(array $searchTerms);
+    public function searchContacts(array $searchTerms): LengthAwarePaginator;
 
     public function getContactById($id);
 

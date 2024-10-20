@@ -7,7 +7,8 @@ use App\DTO\ContactDTO;
 use App\Http\Requests\ContactRequest;
 use App\Http\Resources\ContactResource;
 use App\Services\ViaCepService;
-use Illuminate\Http\{Request, Response};
+use Illuminate\Http\{JsonResponse, Request, Response};
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\{DB, Log};
 
 class ContactController extends Controller
@@ -22,14 +23,13 @@ class ContactController extends Controller
         $this->viaCepService     = $viaCepService;
     }
 
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         $contacts = $this->contactRepository->getAllContacts();
-
         return ContactResource::collection($contacts);
     }
 
-    public function search(Request $request)
+    public function search(Request $request): JsonResponse
     {
         $searchTerm = $request->only(['name', 'email', 'cep', 'number']);
 
@@ -50,8 +50,7 @@ class ContactController extends Controller
         return ContactResource::collection($contacts);
     }
 
-
-    public function show($id)
+    public function show($id): JsonResponse
     {
         try {
             $contact = $this->contactRepository->getContactById($id);
@@ -64,7 +63,7 @@ class ContactController extends Controller
         }
     }
 
-    public function store(ContactRequest $request)
+    public function store(ContactRequest $request): JsonResponse
     {
         DB::beginTransaction();
 
@@ -106,7 +105,7 @@ class ContactController extends Controller
         }
     }
 
-    public function update(ContactRequest $request, $id)
+    public function update(ContactRequest $request, $id): JsonResponse
     {
         DB::beginTransaction();
 
@@ -114,9 +113,9 @@ class ContactController extends Controller
             if ($request->has('cep')) {
                 $cep         = $request->input('cep');
                 $addressData = $this->viaCepService->getAddressByCep($cep);
-                $address = $addressData['logradouro'] . ', ' . 
-                $addressData['bairro'] . ', ' . 
-                $addressData['localidade'] . ' - ' . 
+                $address     = $addressData['logradouro'] . ', ' .
+                $addressData['bairro'] . ', ' .
+                $addressData['localidade'] . ' - ' .
                 $addressData['uf'];
                 $request->merge(['address' => $address]);
             }
@@ -139,7 +138,7 @@ class ContactController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         try {
             $this->contactRepository->deleteContact($id);

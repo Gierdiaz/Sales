@@ -26,17 +26,15 @@ describe('Managing Contact Records', function () {
 
     it('can show a contact', function () {
         $contact = Contact::factory()->create();
-    
+
         getJson(route('contacts.show', ['id' => $contact->id]))
             ->assertStatus(200)
             ->assertJson([
                 'data' => $contact->toArray() + ['links' => [
                     'index' => route('contacts.index'),
-                ]]
+                ]],
             ]);
     });
-    
-    
 
     it('can store a contact', function () {
         $data = [
@@ -58,7 +56,7 @@ describe('Managing Contact Records', function () {
 
         postJson(route('contacts.store'), $data)
             ->assertStatus(201);
-        
+
         $this->assertDatabaseHas('contacts', [
             'name'   => 'John Doe',
             'phone'  => '123456789',
@@ -104,12 +102,12 @@ describe('Managing Contact Records', function () {
 
     it('can delete a contact', function () {
         $contact = Contact::factory()->create();
-    
+
         deleteJson(route('contacts.destroy', ['id' => $contact->id]))
             ->assertStatus(200);
-    
+
         $this->assertSoftDeleted('contacts', ['id' => $contact->id]);
 
     });
-    
+
 });

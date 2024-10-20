@@ -14,7 +14,7 @@ class ContactRepository implements ContactRepositoryInterface
         return Contact::query()->orderBy('created_at', 'desc')->paginate(10);
     }
 
-    public function searchContacts(array $searchTerms)
+    public function searchContacts(array $searchTerms): LengthAwarePaginator
     {
         $query = Contact::query();
 

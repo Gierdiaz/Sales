@@ -133,6 +133,14 @@ return [
             'replace_placeholders' => true,
         ],
 
+        'cep' => [
+            'driver'               => 'daily',
+            'path'                 => storage_path('logs/cep.log'),
+            'level'                => 'debug',
+            'days'                 => 7,
+            'replace_placeholders' => true,
+        ],
+
     ],
 
 ];
