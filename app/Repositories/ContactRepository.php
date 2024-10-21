@@ -20,10 +20,9 @@ class ContactRepository implements ContactRepositoryInterface
 
         foreach ($searchTerms as $key => $value) {
             if ($value) {
-                $query->orWhere($key, 'LIKE', "%{$value}%");
+                $query->where($key, 'LIKE', "%{$value}%");
             }
         }
-
         return $query->paginate(10);
     }
 
