@@ -15,8 +15,8 @@ describe('Authentication', function () {
         $data = [
             'name'                  => 'John Doe',
             'email'                 => 'john@example.com',
-            'password'              => 'password',
-            'password_confirmation' => 'password',
+            'password'              => 'SenhaSegura123!',
+            'password_confirmation' => 'SenhaSegura123!',
         ];
 
         postJson(route('auth.register'), $data)
@@ -27,11 +27,11 @@ describe('Authentication', function () {
     });
 
     it('can login a user', function () {
-        $user = User::factory()->create(['password' => bcrypt('password')]);
+        $user = User::factory()->create(['password' => bcrypt('SenhaSegura123!')]);
 
         $data = [
             'email'    => $user->email,
-            'password' => 'password',
+            'password' => 'SenhaSegura123!',
         ];
 
         postJson(route('auth.login'), $data)

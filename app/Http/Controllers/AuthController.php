@@ -6,11 +6,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use App\Http\Requests\AuthRequest; // Importar o AuthRequest
+use App\Http\Requests\AuthRequest; 
 
 class AuthController extends Controller
 {
-    public function register(AuthRequest $request) // Usar o AuthRequest
+    public function register(AuthRequest $request)
     {
         $validatedData = $request->validated();
 
@@ -23,7 +23,7 @@ class AuthController extends Controller
         return response()->json(['message' => 'User registered successfully'], 201);
     }
 
-    public function login(AuthRequest $request) // Usar o AuthRequest
+    public function login(AuthRequest $request)
     {
         $validatedData = $request->validated();
 

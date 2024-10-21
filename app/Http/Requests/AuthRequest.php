@@ -6,22 +6,14 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class AuthRequest extends FormRequest
 {
-    /**
-     * Determine se o usuário está autorizado a fazer esta solicitação.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Obter as regras de validação que se aplicam à solicitação.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
-        if ($this->isMethod('post') && $this->routeIs('register')) {
+        if ($this->routeIs('auth.register')) {
             return [
                 'name'     => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
                 'email'    => 'required|string|email|max:255|unique:users',
@@ -29,10 +21,10 @@ class AuthRequest extends FormRequest
             ];
         }
 
-        if ($this->isMethod('post') && $this->routeIs('login')) {
+        if ($this->routeIs('auth.login')) {
             return [
-                'email'    => 'required|email|max:255',
-                'password' => 'required|string',
+                'email'    => 'required|string|email|max:255',
+                'password' => 'required|string|min:8',
             ];
         }
 
@@ -55,8 +47,6 @@ class AuthRequest extends FormRequest
             'password.min'      => 'A senha deve ter pelo menos 8 caracteres.',
             'password.confirmed' => 'As senhas não correspondem.',
             'password.regex'     => 'A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número e um símbolo.',
-
-            'password.required' => 'O campo senha é obrigatório.',
         ];
     }
 }
