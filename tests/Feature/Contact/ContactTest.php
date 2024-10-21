@@ -36,6 +36,40 @@ describe('Managing Contact Records', function () {
             ]);
     });
 
+    it('can search contacts by cep', function () {
+        Contact::factory()->create([
+            'name'   => 'Alice Smith',
+            'cep'    => '01001-000',
+            'email'  => 'alice@example.com',
+            'phone'  => '123456789',
+            'number' => '10',
+        ]);
+        Contact::factory()->create([
+            'name'   => 'Bob Johnson',
+            'cep'    => '02002-000',
+            'email'  => 'bob@example.com',
+            'phone'  => '987654321',
+            'number' => '20',
+        ]);
+    
+        $response = getJson(route('contacts.search', ['cep' => '01001-000']));
+    
+        $response->assertStatus(200)
+            ->assertJsonFragment([
+                'name'  => 'Alice Smith',
+                'cep'   => '01001-000',
+                'email' => 'alice@example.com',
+                'phone' => '123456789',
+            ]);
+    
+        $responseNotFound = getJson(route('contacts.search', ['cep' => '99999-999']));
+        
+        $responseNotFound->assertStatus(404)
+            ->assertJson([
+                'message' => 'Nenhum contato encontrado para o termo fornecido.',
+            ]);
+    });    
+
     it('can store a contact', function () {
         $data = [
             'name'   => 'John Doe',
