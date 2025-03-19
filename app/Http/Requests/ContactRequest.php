@@ -23,10 +23,10 @@ class ContactRequest extends FormRequest
     {
         return [
             'name'   => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
-            'phone'  => 'required|string|regex:/^\+?[0-9\s\-]+$/|max:15',
+            'phone'  => 'required|string|regex:/^(\+55)?\d{10,11}$/',
             'email'  => 'required|email|max:255',
             'number' => 'nullable|string|max:10|regex:/^[a-zA-Z0-9\-\/]+$/',
-            'cep'    => 'required|string|regex:/^\d{5}-\d{3}$/',
+            'cep'    => 'required|string|regex:/^\d{5}-?\d{3}$/',
         ];
     }
 
@@ -41,8 +41,7 @@ class ContactRequest extends FormRequest
             'name.max'      => 'O nome não pode ter mais que 255 caracteres.',
 
             'phone.required' => 'O campo telefone é obrigatório.',
-            'phone.regex'    => 'O telefone deve ser numérico e pode incluir espaços, traços ou o símbolo "+" para código de país.',
-            'phone.max'      => 'O telefone não pode ter mais que 15 caracteres.',
+            'phone.regex'    => 'O telefone deve conter apenas números e pode iniciar com "+". Exemplo: +5511998765432',
 
             'email.required' => 'O campo e-mail é obrigatório.',
             'email.email'    => 'Forneça um endereço de e-mail válido.',
@@ -53,7 +52,7 @@ class ContactRequest extends FormRequest
             'number.regex'  => 'O número só pode conter letras, números, traços ou barras.',
 
             'cep.required' => 'O campo CEP é obrigatório.',
-            'cep.regex'    => 'O CEP deve estar no formato 00000-000.',
+            'cep.regex'    => 'O CEP deve estar no formato 00000-000 ou 00000000.',
         ];
     }
 }

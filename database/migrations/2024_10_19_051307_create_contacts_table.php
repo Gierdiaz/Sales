@@ -17,7 +17,7 @@ return new class () extends Migration {
             $table->string('email');
             $table->string('number')->nullable()->comment('Número da residência ou apartamento');
             $table->string('cep')->comment('Código postal');
-            $table->string('address')->nullable()->comment('Endereço completo do contato');
+            $table->json('address')->nullable()->comment('Objeto de valor Address armazenado como JSON');
             $table->timestamps();
             $table->softDeletes();
         });

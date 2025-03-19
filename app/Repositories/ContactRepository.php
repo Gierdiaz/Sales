@@ -5,16 +5,17 @@ namespace App\Repositories;
 use App\Contracts\ContactRepositoryInterface;
 use App\DTO\ContactDTO;
 use App\Models\Contact;
+use App\ValueObjects\Address;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class ContactRepository implements ContactRepositoryInterface
 {
-    public function getAllContacts(): LengthAwarePaginator
+    public function paginateContacts(): LengthAwarePaginator
     {
         return Contact::query()->orderBy('created_at', 'desc')->paginate(10);
     }
 
-    public function searchContacts(array $searchTerms): LengthAwarePaginator
+    public function findContactsByFilters(array $searchTerms): LengthAwarePaginator
     {
         $query = Contact::query();
 
@@ -23,15 +24,16 @@ class ContactRepository implements ContactRepositoryInterface
                 $query->where($key, 'LIKE', "%{$value}%");
             }
         }
+
         return $query->paginate(10);
     }
 
-    public function getContactById($id)
+    public function findContactById($id)
     {
         return Contact::findOrFail($id);
     }
 
-    public function createContact(ContactDTO $contactDTO)
+    public function insertContact(ContactDTO $contactDTO)
     {
         return Contact::create([
             'name'    => $contactDTO->name,
@@ -39,16 +41,20 @@ class ContactRepository implements ContactRepositoryInterface
             'email'   => $contactDTO->email,
             'number'  => $contactDTO->number,
             'cep'     => $contactDTO->cep,
-            'address' => $contactDTO->address,
+            'address' => $contactDTO->address->toArray(),
         ]);
     }
 
-    public function updateContact($id, array $data)
+    public function modifyContact($id, array $data)
     {
+        if (isset($data['address']) && $data['address'] instanceof Address) {
+            $data['address'] = $data['address']->toArray();
+        }
+
         return Contact::where('id', $id)->update($data);
     }
 
-    public function deleteContact($id)
+    public function removeContact($id)
     {
         return Contact::destroy($id);
     }

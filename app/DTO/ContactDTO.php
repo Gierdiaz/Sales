@@ -2,6 +2,8 @@
 
 namespace App\DTO;
 
+use App\ValueObjects\Address;
+
 class ContactDTO
 {
     public function __construct(
@@ -10,7 +12,7 @@ class ContactDTO
         public string $email,
         public string $number,
         public string $cep,
-        public string $address
+        public Address $address
     ) {
     }
 }

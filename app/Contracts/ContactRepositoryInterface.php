@@ -7,15 +7,15 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface ContactRepositoryInterface
 {
-    public function getAllContacts(): LengthAwarePaginator;
+    public function paginateContacts(): LengthAwarePaginator;
 
-    public function searchContacts(array $searchTerms): LengthAwarePaginator;
+    public function findContactsByFilters(array $searchTerms): LengthAwarePaginator;
 
-    public function getContactById($id);
+    public function findContactById($id);
 
-    public function createContact(ContactDTO $contactDTO);
+    public function insertContact(ContactDTO $contactDTO);
 
-    public function updateContact($id, array $data);
+    public function modifyContact($id, array $data);
 
-    public function deleteContact($id);
+    public function removeContact($id);
 }

@@ -2,30 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\ContactRepositoryInterface;
-use App\DTO\ContactDTO;
 use App\Http\Requests\ContactRequest;
 use App\Http\Resources\ContactResource;
-use App\Services\ViaCepService;
+use App\Services\ContactService;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\{JsonResponse, Request, Response};
-use Illuminate\Support\Facades\{DB, Log};
+use Illuminate\Support\Facades\{DB};
 
 class ContactController extends Controller
 {
-    protected $contactRepository;
+    private $contactService;
 
-    protected $viaCepService;
-
-    public function __construct(ContactRepositoryInterface $contactRepository, ViaCepService $viaCepService)
+    public function __construct(ContactService $contactService)
     {
-        $this->contactRepository = $contactRepository;
-        $this->viaCepService     = $viaCepService;
+        $this->contactService = $contactService;
     }
 
     public function index(): AnonymousResourceCollection
     {
-        $contacts = $this->contactRepository->getAllContacts();
+        $contacts = $this->contactService->listContacts();
 
         return ContactResource::collection($contacts);
     }
@@ -40,7 +35,7 @@ class ContactController extends Controller
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        $contacts = $this->contactRepository->searchContacts($searchTerm);
+        $contacts = $this->contactService->searchContactsByCriteria($searchTerm);
 
         if ($contacts->isEmpty()) {
             return response()->json([
@@ -54,13 +49,14 @@ class ContactController extends Controller
     public function show($id)
     {
         try {
-            $contact = $this->contactRepository->getContactById($id);
+            $contact = $this->contactService->retrieveContact($id);
 
             return ContactResource::make($contact);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Contato não encontrado.',
-            ], Response::HTTP_NOT_FOUND);
+                'message' => 'Erro ao buscar contato.',
+                'details' => $e->getMessage(),
+            ], $e->getCode() ?: Response::HTTP_NOT_FOUND);
         }
     }
 
@@ -69,19 +65,7 @@ class ContactController extends Controller
         DB::beginTransaction();
 
         try {
-            $cep         = $request->input('cep');
-            $addressData = $this->viaCepService->getAddressByCep($cep);
-
-            $contactDTO = new ContactDTO(
-                $request->input('name'),
-                $request->input('phone'),
-                $request->input('email'),
-                $request->input('number'),
-                $cep,
-                $addressData['logradouro'] . ', ' . $addressData['bairro'] . ', ' . $addressData['localidade'] . ' - ' . $addressData['uf']
-            );
-
-            $contact = $this->contactRepository->createContact($contactDTO);
+            $contact = $this->contactService->registerNewContact($request->all());
 
             DB::commit();
 
@@ -91,16 +75,9 @@ class ContactController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::channel('contact')->error('Erro ao criar contato: ' . $e->getMessage(), [
-                'code'       => $e->getCode(),
-                'line'       => $e->getLine(),
-                'file'       => $e->getFile(),
-                'trace'      => $e->getTraceAsString(),
-                'data_input' => $request->all(),
-            ]);
 
             return response()->json([
-                'message' => 'Ocorreu um erro ao tentar criar o contato.',
+                'message' => 'Erro ao registrar contato.',
                 'details' => $e->getMessage(),
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -111,17 +88,8 @@ class ContactController extends Controller
         DB::beginTransaction();
 
         try {
-            if ($request->has('cep')) {
-                $cep         = $request->input('cep');
-                $addressData = $this->viaCepService->getAddressByCep($cep);
-                $address     = $addressData['logradouro'] . ', ' .
-                $addressData['bairro'] . ', ' .
-                $addressData['localidade'] . ' - ' .
-                $addressData['uf'];
-                $request->merge(['address' => $address]);
-            }
 
-            $this->contactRepository->updateContact($id, $request->all());
+            $this->contactService->editContactDetails($id, $request->all());
 
             DB::commit();
 
@@ -142,10 +110,10 @@ class ContactController extends Controller
     public function destroy($id): JsonResponse
     {
         try {
-            $this->contactRepository->deleteContact($id);
+            $this->contactService->removeContactById($id);
 
             return response()->json([
-                'message' => 'Contato excluído com sucesso.',
+                'message' => 'Contato removido com sucesso.',
             ], Response::HTTP_OK);
         } catch (\Exception $e) {
             return response()->json([

@@ -43,8 +43,8 @@ class AuthRequest extends FormRequest
             'email.max'      => 'O e-mail não pode ter mais que 255 caracteres.',
             'email.unique'   => 'Este e-mail já está em uso.',
 
-            'password.required' => 'O campo senha é obrigatório.',
-            'password.min'      => 'A senha deve ter pelo menos 8 caracteres.',
+            'password.required'  => 'O campo senha é obrigatório.',
+            'password.min'       => 'A senha deve ter pelo menos 8 caracteres.',
             'password.confirmed' => 'As senhas não correspondem.',
             'password.regex'     => 'A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número e um símbolo.',
         ];
