@@ -16,10 +16,6 @@ class Contact extends Model
 
     protected $table = 'contacts';
 
-    // protected $keyType = 'string';
-    // public $incrementing = false;
-    // protected $primaryKey = 'id';
-
     protected $fillable = [
         'name',
         'phone',
@@ -54,9 +50,4 @@ class Contact extends Model
     {
         $this->attributes['address'] = json_encode($address->toArray());
     }
-
-    // public function setCepAttribute($value)
-    // {
-    //     $this->attributes['cep'] = preg_replace('/[^0-9]/', '', $value); 
-    // }
 }

@@ -25,7 +25,7 @@ class ContactRequest extends FormRequest
             'name'   => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
             'phone'  => 'required|string|regex:/^(\+55)?\d{10,11}$/',
             'email'  => 'required|email|max:255',
-            'number' => 'nullable|string|max:10|regex:/^[a-zA-Z0-9\-\/]+$/',
+            'number' => 'required|string|max:10|regex:/^[a-zA-Z0-9\-\/]+$/',
             'cep'    => 'required|string|regex:/^\d{5}-?\d{3}$/',
         ];
     }

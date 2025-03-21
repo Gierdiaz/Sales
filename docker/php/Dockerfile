@@ -42,7 +42,7 @@ COPY .env.example .env
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html \
     && chmod -R 775 /var/www/html/storage \
-    && chmod -R 777 /var/www/html/storage/logs \
+    && chmod -R 777 /var/www/html/storage \
     && chmod -R 775 /var/www/html/bootstrap/cache
 
 RUN composer dump-autoload --optimize

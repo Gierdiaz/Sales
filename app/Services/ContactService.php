@@ -26,7 +26,7 @@ class ContactService
 
     public function searchContactsByCriteria(array $searchTerm)
     {
-        Log::info('===================== Buscando contatos com critérios: ' . $searchTerm . '=====================');
+        Log::info('===================== Buscando contatos com critérios: ===================== ', $searchTerm);
 
         if (empty(array_filter($searchTerm))) {
             Log::warning('Tentativa de busca sem critérios fornecidos.');
@@ -62,7 +62,7 @@ class ContactService
 
     public function registerNewContact(array $data)
     {
-        Log::info('===================== Iniciando registro de novo contato' . $data . '=====================');
+        Log::info('===================== Iniciando registro de novo contato =====================', $data);
 
         if (!isset($data['name'], $data['phone'], $data['email'], $data['number'], $data['cep'])) {
             Log::error('Dados incompletos ao tentar registrar um contato', $data);
@@ -112,7 +112,7 @@ class ContactService
 
     public function editContactDetails($id, array $data)
     {
-        Log::info("('===================== Editando contato ID: {$id}", $data . '=====================');
+        Log::info("===================== Editando contato ID: {$id} =====================", $data);
 
         $contact = $this->contactRepository->findContactById($id);
 
