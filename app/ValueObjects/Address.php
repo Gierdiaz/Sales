@@ -7,7 +7,6 @@ use Illuminate\Contracts\Support\Arrayable;
 class Address implements Arrayable
 {
     public function __construct(
-        public string $cep,
         public string $logradouro,
         public string $bairro,
         public string $localidade,
@@ -25,7 +24,6 @@ class Address implements Arrayable
     public function toArray(): array
     {
         return [
-            'cep'        => $this->cep,
             'logradouro' => $this->logradouro,
             'bairro'     => $this->bairro,
             'localidade' => $this->localidade,
@@ -43,7 +41,6 @@ class Address implements Arrayable
     public static function fromArray(array $data): self
     {
         return new self(
-            $data['cep'] ?? '',
             $data['logradouro'] ?? '',
             $data['bairro'] ?? '',
             $data['localidade'] ?? '',

@@ -86,7 +86,6 @@ class ContactService
             $data['number'],
             $cep,
             Address::fromArray([
-                'cep'        => $cep,
                 'logradouro' => $addressData->logradouro ?? '',
                 'bairro'     => $addressData->bairro ?? '',
                 'cidade'     => $addressData->localidade ?? '',
@@ -133,7 +132,6 @@ class ContactService
             }
 
             $data['address'] = Address::fromArray([
-                'cep'        => $cep,
                 'logradouro' => $addressData->logradouro ?? '',
                 'bairro'     => $addressData->bairro ?? '',
                 'cidade'     => $addressData->localidade ?? '',

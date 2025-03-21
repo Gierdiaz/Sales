@@ -25,52 +25,57 @@ describe('Managing Contact Records', function () {
 
     it('can list contacts', function () {
         Contact::factory()->create([
-            'name'  => 'Állison Luis',
-            'phone' => '21997651914',
+            'name'   => 'Állison Luis',
+            'phone'  => '21997651914',
             'number' => '43',
-            'email' => 'gierdiaz@hotmail.com',
-            'cep'   => '23017-130',
+            'email'  => 'gierdiaz@hotmail.com',
+            'cep'    => '23017-130',
         ]);
 
         getJson(route('contacts.index'))
             ->assertStatus(200)
-            ->assertJsonStructure(['data' => [['id', 'name', 'phone', 'email', 'cep']]]);
+            ->assertJsonStructure([
+                'data' => [['id', 'name', 'phone', 'email', 'cep']]
+            ]);
     });
 
     it('can show a contact', function () {
         $contact = Contact::factory()->create([
-            'name'  => 'Állison Luis',
-            'phone' => '21997651914',
+            'name'   => 'Állison Luis',
+            'phone'  => '21997651914',
             'number' => '43',
-            'email' => 'gierdiaz@hotmail.com',
-            'cep'   => '23017-130',
+            'email'  => 'gierdiaz@hotmail.com',
+            'cep'    => '23017-130',
         ]);
 
         getJson(route('contacts.show', $contact->id))
             ->assertStatus(200)
             ->assertJsonFragment([
-                'id' => $contact->id,
-                'name' => $contact->name,
+                'id'     => $contact->id,
+                'name'   => $contact->name,
                 'number' => $contact->number,
-                'phone' => $contact->phone,
-                'email' => $contact->email,
-                'cep' => $contact->cep,           
+                'phone'  => $contact->phone,
+                'email'  => $contact->email,
+                'cep'    => $contact->cep,
             ]);
 
     });
 
     it('can search contacts by cep', function () {
         Contact::factory()->create([
-            'name'  => 'Állison Luis',
-            'cep'   => '23017-130',
+            'name'   => 'Állison Luis',
+            'cep'    => '23017-130',
             'number' => '43',
-            'email' => 'gierdiaz@hotmail.com',
-            'phone' => '21997651914',
+            'email'  => 'gierdiaz@hotmail.com',
+            'phone'  => '21997651914',
         ]);
 
         getJson(route('contacts.search', ['cep' => '23017-130']))
             ->assertStatus(200)
-            ->assertJsonFragment(['name' => 'Állison Luis', 'cep' => '23017-130']);
+            ->assertJsonFragment([
+                'name' => 'Állison Luis',
+                'cep' => '23017-130'
+            ]);
     });
 
     it('can store a contact', function () {
@@ -83,8 +88,7 @@ describe('Managing Contact Records', function () {
         ];
 
         $mock = Mockery::mock(ViaCepIntegration::class);
-        $mock->shouldReceive('getAddressByCep')->andReturn([
-            'cep'        => '23017-130',
+        $mock->shouldReceive('getAddressByCep')->andReturn((object) [
             'logradouro' => 'Rua Olinto da Gama Botelho',
             'bairro'     => 'Bairro RJ',
             'localidade' => 'Rio de Janeiro',
@@ -94,12 +98,12 @@ describe('Managing Contact Records', function () {
             'ddd'        => '21',
             'siafi'      => '6001',
         ]);
-        
+
         app()->instance(ViaCepIntegration::class, $mock);
 
         postJson(route('contacts.store'), $data)
             ->assertStatus(201)
-            ->assertJson(['message' => 'Contato criado com sucesso.']);
+            ->assertJson(['message' => 'Contato registrado com sucesso.']);
 
         $this->assertDatabaseHas('contacts', $data);
     });
@@ -108,11 +112,11 @@ describe('Managing Contact Records', function () {
         $contact = Contact::factory()->create();
 
         $data = [
-            'name'   => 'Jane Doe',
-            'phone'  => '987654321',
-            'number' => '43',
-            'email'  => 'jane@example.com',
-            'cep'    => '02002-000',
+            'name'   => 'Pâmela Barbosa',
+            'phone'  => '21992912611',
+            'number' => '10',
+            'email'  => 'schzimmyd@gmail.com',
+            'cep'    => '21220-380',
         ];
 
         putJson(route('contacts.update', $contact->id), $data)

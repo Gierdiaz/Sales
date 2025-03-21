@@ -69,9 +69,10 @@ class ContactController extends Controller
 
             DB::commit();
 
-            return (ContactResource::make($contact))
-                ->response()
-                ->setStatusCode(Response::HTTP_CREATED);
+            return response()->json([
+                'message' => 'Contato registrado com sucesso.',
+                'data'    => new ContactResource($contact),
+            ], Response::HTTP_CREATED);
 
         } catch (\Exception $e) {
             DB::rollBack();
