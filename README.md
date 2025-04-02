@@ -206,19 +206,32 @@ docker exec app ./vendor/bin/phpstan analyse --memory-limit=2G
 - **Resposta:**
 ```json
     "data": [
-      {
-        "id": "550e8400-e29b-41d4-a716-446655440000" ,
-        "name": "Nome do Contato",
-        "phone": "123456789",
-        "email": "contato@example.com",
-        "number": "10",
-        "cep": "22070-012",
-        "address": "Praia de Copacabana, Rio de Janeiro - RJ",
-        "links": {
-          "show": "/api/contacts/550e8400-e29b-41d4-a716-446655440000"
-        }
-      }
-    ]
+        {
+            "id": "0195f7c5-92a4-701c-b342-5361b3e2af18",
+            "name": "Állison Luis",
+            "phone": "21997651914",
+            "email": "gierdiaz@hotmail.com",
+            "number": "43",
+            "cep": "23017-130",
+            "address": {
+                "uf": "",
+                "ddd": "21",
+                "gia": "",
+                "ibge": "3304557",
+                "siafi": "6001",
+                "bairro": "Campo Grande",
+                "estado": "RJ",
+                "regiao": "",
+                "unidade": "",
+                "localidade": "",
+                "logradouro": "Rua Olinto da Gama Botelho",
+                "complemento": ""
+            },
+            "links": {
+                "show": "http://localhost:8000/api/v1/contacts/0195f7c5-92a4-701c-b342-5361b3e2af18"
+            }
+        },
+]
 ```
 
 ### Mostra Contatos
@@ -227,16 +240,30 @@ docker exec app ./vendor/bin/phpstan analyse --memory-limit=2G
 - **Endpoint:** `/api/v1/contacts`  
 - **Resposta:**
 ```json
+{
     "data": {
-        "id": "550e8400-e29b-41d4-a716-446655440000",
-        "name": "Nome do Contato",
-        "phone": "123456789",
-        "email": "contato@exemplo.com",
-        "number": "10",
-        "cep": "22070-012",
-        "address": "Endereço, Bairro, Cidade - UF",
+        "id": "0195f7c5-92a4-701c-b342-5361b3e2af18",
+        "name": "Állison Luis",
+        "phone": "21997651914",
+        "email": "gierdiaz@hotmail.com",
+        "number": "43",
+        "cep": "23017-130",
+        "address": {
+            "uf": "",
+            "ddd": "21",
+            "gia": "",
+            "ibge": "3304557",
+            "siafi": "6001",
+            "bairro": "Campo Grande",
+            "estado": "RJ",
+            "regiao": "",
+            "unidade": "",
+            "localidade": "",
+            "logradouro": "Rua Olinto da Gama Botelho",
+            "complemento": ""
+        },
         "links": {
-            "index": "/api/contacts"
+            "index": "http://localhost:8000/api/v1/contacts"
         }
     }
 ```
@@ -277,15 +304,31 @@ docker exec app ./vendor/bin/phpstan analyse --memory-limit=2G
 
 - **Resposta:**
 ```json
+{
+    "message": "Contato registrado com sucesso.",
     "data": {
-        "id": "550e8400-e29b-41d4-a716-446655440000",
-        "name": "Nome do Contato",
-        "phone": "123456789",
-        "email": "contato@exemplo.com",
-        "number": "10",
-        "cep": "22070-012",
-        "address": "Endereço, Bairro, Cidade - UF"
-    }  
+        "id": "0195f7c5-92a4-701c-b342-5361b3e2af18",
+        "name": "Állison Luis",
+        "phone": "21997651914",
+        "email": "gierdiaz@hotmail.com",
+        "number": "43",
+        "cep": "23017-130",
+        "address": {
+            "logradouro": "Rua Olinto da Gama Botelho",
+            "complemento": "",
+            "unidade": "",
+            "bairro": "Campo Grande",
+            "localidade": "",
+            "uf": "",
+            "estado": "RJ",
+            "regiao": "",
+            "ibge": "3304557",
+            "gia": "",
+            "ddd": "21",
+            "siafi": "6001"
+        }
+    }
+}
 ```
 
 ### Atualizar Contato
