@@ -26,7 +26,7 @@ class Contact extends Model
     ];
 
     protected $casts = [
-        'address'    => 'array', // Converte automaticamente JSON para array
+        'address'    => 'array',
         'created_at' => 'datetime:d-m-Y H:i:s',
         'updated_at' => 'datetime:d-m-Y H:i:s',
     ];
